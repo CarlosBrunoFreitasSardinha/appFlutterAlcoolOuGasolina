@@ -15,18 +15,26 @@ class _AlcoolOuGasolinaState extends State<AlcoolGasolina> {
   String _resultado = "";
 
   void _melhorCustoBeneficio(){
-    var qtLitroDeAlcool = (double.tryParse(_percurso.text) / double.tryParse(_kmAlcool.text));
-    var qtLitroDeGasolina = (double.tryParse(_percurso.text) / double.tryParse(_kmGasolina.text));
-    if((qtLitroDeAlcool*double.tryParse(_valorAlcool.text)) >=(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)))
-      setState(() {
-        _resultado = "Melhor Abastecer com Gasolina!\nGasolina: ${qtLitroDeGasolina.toStringAsPrecision(2)} litros, total R\$ ${(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)).toStringAsPrecision(4)}"+
-        "\nAlcool:  ${qtLitroDeAlcool.toStringAsPrecision(2)} litros, totalizando R\$ ${(qtLitroDeAlcool*double.tryParse(_valorAlcool.text)).toStringAsPrecision(4)}";
+    if((double.tryParse(_percurso.text) != null && double.tryParse(_kmAlcool.text) != null &&
+        double.tryParse(_kmGasolina.text) != null && double.tryParse(_valorAlcool.text) != null &&
+        double.tryParse(_valorGasolina.text) != null)){
+      var qtLitroDeAlcool = (double.tryParse(_percurso.text) / double.tryParse(_kmAlcool.text));
+      var qtLitroDeGasolina = (double.tryParse(_percurso.text) / double.tryParse(_kmGasolina.text));
+      if((qtLitroDeAlcool*double.tryParse(_valorAlcool.text)) >=(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)))
+        setState(() {
+          _resultado = "Melhor Abastecer com Gasolina!\nGasolina: ${qtLitroDeGasolina.toStringAsPrecision(2)} litros, total R\$ ${(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)).toStringAsPrecision(4)}"+
+          "\nAlcool:  ${qtLitroDeAlcool.toStringAsPrecision(2)} litros, totalizando R\$ ${(qtLitroDeAlcool*double.tryParse(_valorAlcool.text)).toStringAsPrecision(4)}";
+        });
+      else
+        setState(() {
+          _resultado = "Melhor Abastecer com Alcool!\nAlcool: ${qtLitroDeAlcool.toStringAsPrecision(2)} litros, totalizam R\$ ${(qtLitroDeAlcool*double.tryParse(_valorAlcool.text)).toStringAsPrecision(4)}"+
+              "\nGasolina: ${qtLitroDeGasolina.toStringAsPrecision(2)} litros, totalizando R\$ ${(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)).toStringAsPrecision(4)}";
+        });
+    }
+    else setState(() {
+      _resultado = "Pelo menos um dos números é inválido, informe números maiores que zero e utilizando(.)";
       });
-    else
-      setState(() {
-        _resultado = "Melhor Abastecer com Alcool!\nAlcool: ${qtLitroDeAlcool.toStringAsPrecision(2)} litros, totalizam R\$ ${(qtLitroDeAlcool*double.tryParse(_valorAlcool.text)).toStringAsPrecision(4)}"+
-            "\nGasolina: ${qtLitroDeGasolina.toStringAsPrecision(2)} litros, totalizando R\$ ${(qtLitroDeGasolina*double.tryParse(_valorGasolina.text)).toStringAsPrecision(4)}";
-      });
+
   }
 
   @override
@@ -44,8 +52,9 @@ class _AlcoolOuGasolinaState extends State<AlcoolGasolina> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 5),
-                child: Image.asset("images/logo.png",height: 60,),
+                child: Image.asset("images/logo.png", height: 60,),
               ),
+
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child:
